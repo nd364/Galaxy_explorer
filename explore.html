@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Explore - Galaxy Explorer</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Your CSS -->
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+
+    <a class="navbar-brand" href="index.html">Galaxy Explorer</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="explore.html">Explore</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="gallery.html">Gallery</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="container text-center my-5">
+  <h1>Explore the Universe</h1>
+  <p>Interact with galaxies and black holes in 3D</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <div class="row">
+
+    <!-- 3D VIEWER -->
+    <div class="col-lg-8 mb-4">
+
+      <div id="threeContainer" class="border rounded" style="width:100%; height:500px;">
+        <!-- Three.js canvas will appear here -->
+      </div>
+
+    </div>
+
+    <!-- CONTROL PANEL -->
+    <div class="col-lg-4">
+
+      <div class="card p-3">
+
+        <h5>Controls</h5>
+
+        <div class="d-grid gap-2">
+
+  <button class="btn btn-primary" onclick="showRocket()">Rocket</button>
+  <button class="btn btn-primary" onclick="showSolarSystem()">Solar System</button>
+  <button class="btn btn-dark" onclick="showBlackHole()">
+  Black Hole
+</button>
+<hr>
+
+<h6>View Modes</h6>
+
+<button class="btn btn-outline-info" onclick="toggleWireframe()">
+  Toggle Wireframe
+</button>
+
+  <button class="btn btn-secondary" onclick="setFrontView()">Front View</button>
+  <button class="btn btn-secondary" onclick="setTopView()">Top View</button>
+  <button class="btn btn-secondary" onclick="setSideView()">Side View</button>
+
+  <button class="btn btn-secondary" onclick="toggleRotation()">Toggle Rotation</button>
+  
+<button class="btn btn-warning" onclick="togglePlanetMotion()">
+  Pause Planet Motion
+</button>
+  <button id="soundBtn" class="btn btn-success" onclick="toggleSound()">
+    Play Sound
+  </button>
+
+</div>
+
+        <hr>
+
+        <h6>Instructions</h6>
+        <p>
+          Drag to rotate<br>
+          Scroll to zoom<br>
+          Right-click to pan
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center p-4 mt-5">
+  <p>Galaxy Explorer Project</p>
+</footer>
+
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<!-- YOUR SCRIPT -->
+<script type="module" src="js/script.js"></script>
+
+<!-- CONTROL BUTTON FUNCTIONS -->
+<script>
+function setFrontView() {
+  window.camera.position.set(0, 2, 6);
+}
+
+function setTopView() {
+  window.camera.position.set(0, 10, 0);
+}
+
+function setSideView() {
+  window.camera.position.set(6, 2, 0);
+}
+
+function toggleRotation() {
+  window.controls.autoRotate = !window.controls.autoRotate;
+}
+</script>
+<script>
+function showRocket() {
+  if (window.rocketModel) {
+    window.rocketModel.visible = true;
+  }
+
+  if (window.solarSystemModel) {
+    window.solarSystemModel.visible = false;
+  }
+
+  window.camera.position.set(0, 1, 3);
+}
+
+function showSolarSystem() {
+  if (window.rocketModel) {
+    window.rocketModel.visible = false;
+  }
+
+  if (window.solarSystemModel) {
+    window.solarSystemModel.visible = true;
+  }
+
+  window.camera.position.set(0, 4, 10);
+}
+</script>
+
+<script>
+function toggleSound() {
+  if (!window.sound) return;
+
+  if (window.listener.context.state === 'suspended') {
+    window.listener.context.resume();
+  }
+
+  if (window.sound.isPlaying) {
+    window.sound.pause();
+  } else {
+    window.sound.play();
+  }
+}
+</script>
+</body>
+</html>
